@@ -1,0 +1,56 @@
+<div class="container" >
+    <div class="row my-5">
+        <div class="col-12">
+            <div class="text-center my-4">
+                <img src="assets/images/pizza.jpg" style="width: 150px" alt="">
+            </div>
+            <div *ngIf="profile && auth_service.isSignedIn()">
+                <h1 class="text-center" *ngIf="this.auth_service.getIDPToken()">Hi {{profile?.names[0].displayName}}! &nbsp; &nbsp;Thank you very much.</h1>
+                <h1 class="text-center" *ngIf="!this.auth_service.getIDPToken()">Hi {{profile?.nickname}}! &nbsp; &nbsp;Thank you very much.</h1>
+            </div>
+            <h1 class="text-center" *ngIf="!profile || !auth_service.isSignedIn()">Welcome to Pizza 42. &nbsp;&nbsp;Please login</h1>
+        </div>
+    </div>
+    <div class="row my-5" *ngIf="!profile || !auth_service.isSignedIn()">
+        <div class="col-sm-3 mb-4" *ngFor="let i of pizzas_array">
+            <img src="assets/images/pizza_flat.jpg" style="width: 100%" alt="">
+        </div>
+    </div>
+	<div class="row my-5" *ngIf="profile && auth_service.isSignedIn() && this.auth_service.getIDPToken()">
+		<div class="col-md-4">
+			<img [src]="profile?.photos[0].url" alt="" style="width: 100%">
+		</div>
+		<div class="col-md-8">
+            <h5 class="text-center my-4">Auth result</h5>
+            <h6>Auth Access Token</h6>
+            <p class="text-danger">{{auth_service.getToken().access_token}}</p>
+            <h6>Auth Management Token</h6>
+            <p class="text-danger">{{auth_service.getAPIManagementToken()}}</p>
+			<h6>IDP Access Token</h6>
+            <p class="text-danger">{{auth_service.getIDPToken()}}</p>
+            
+
+			<h5 class="text-center my-4">People API result</h5>
+			<h6>Email Address</h6>
+            <p class="text-danger">{{profile?.emailAddresses[0].value}}</p>
+            <h6>Resource Name</h6>
+            <p class="text-danger">{{profile?.resourceName}}</p>
+			<h6>Full data</h6>
+            <p class="text-danger">{{getJSON(profile)}}</p>
+            
+            <h5 class="text-center my-4">Conatcts data</h5>
+            <h6  *ngIf="!contacts.feed || !contacts.feed.entry">no contacts</h6>
+            <div *ngIf="contacts.feed && contacts.feed.entry">
+                <h6>Contacts count</h6>
+                <p class="text-danger">{{contacts?.feed?.entry?.length}}</p>
+                <h6>Contacts</h6>
+                <p class="text-danger" *ngFor="let data of contacts.feed.entry; let i = index;">
+                    {{i}}&nbsp;&nbsp;<span class="text-dark">email:</span>&nbsp;{{data.gd$email[0]?.address}}
+                    &nbsp;&nbsp;&nbsp;<span *ngIf="data.gd$name && data.gd$name.gd$fullName && data.gd$name.gd$fullName.$t"><span class="text-dark">&nbsp;{{data?.gd$name?.gd$fullName?.$t}}</span> </span>
+                </p>
+                <h6>Full Contact Info</h6>
+                <p class="text-danger">{{contacts.feed.entry | json}}</p>
+            </div>
+		</div>
+	</div>
+</div>

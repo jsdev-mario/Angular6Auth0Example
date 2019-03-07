@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#"><img src="assets/images/pizza.jpg" style="height: 50px;" alt=""></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" style="cursor: pointer;" (click)="signIn()" *ngIf="!isLoggedIn()">Log In</a>
+            <a class="nav-item nav-link" style="cursor: pointer;" (click)="logOut()" *ngIf="isLoggedIn()">Log Out</a>
+        </div>
+        <div class="navbar-nav text-light">
+           Author:&nbsp;&nbsp;&nbsp;<span>Charlie Nash</span>
+        </div>
+    </div>
+</nav>
+<router-outlet></router-outlet>
+
+
